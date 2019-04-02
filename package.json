@@ -1,42 +1,46 @@
 {
-    "name": "@fzed51/webpack-config",
-    "version": "1.0.0",
-    "description": "configuration de base pour webpack",
-    "main": "./src/config.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [
-      "webpack",
-      "config",
-      "react",
-      "typescript"
-    ],
-    "author": "Fabien Sanchez <fzed51@gmail.com>",
-    "license": "MIT","dependencies": {
-      "@types/react": "^16.3.13",
-      "@types/react-dom": "^16.8.3",
-      "@babel/core": "^7.4.0",
-      "@babel/preset-env": "^7.4.2",
-      "@babel/preset-react": "^7.0.0",
-      "@babel/preset-stage-3": "^7.0.0",
-      "@babel/preset-typescript": "^7.3.3",
-      "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-      "@babel/plugin-syntax-import-meta": "^7.2.0",
-      "@babel/plugin-proposal-class-properties": "^7.4.0",
-      "@babel/plugin-proposal-json-strings": "^7.2.0",
-      "babel-loader": "^8.0.5",
-      "clean-webpack-plugin": "^2.0.1",
-      "css-loader": "^2.1.1",
-      "html-webpack-plugin": "^3.2.0",
-      "node-sass": "^4.11.0",
-      "react": "^16.8.4",
-      "react-dom": "^16.8.4",
-      "sass-loader": "^7.1.0",
-      "style-loader": "^0.23.1",
-      "url-loader": "^1.1.2",
-      "webpack": "^4.29.6",
-      "webpack-cli": "^3.3.0",
-      "webpack-dev-server": "^3.2.1"
-    }
+  "name": "@fzed51/webpack-config",
+  "version": "1.0.0",
+  "description": "configuration de base pour webpack",
+  "main": "./src/config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webpack",
+    "config",
+    "react",
+    "typescript"
+  ],
+  "author": "Fabien Sanchez <fzed51+code@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fzed51/webpack-config.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/react": "^16.3.13",
+    "@types/react-dom": "^16.8.3",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-syntax-import-meta": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-json-strings": "^7.2.0",
+    "babel-loader": "^8.0.5",
+    "clean-webpack-plugin": "^2.0.1",
+    "css-loader": "^2.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.11.0",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
   }
+}
