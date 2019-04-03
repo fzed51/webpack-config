@@ -20,7 +20,10 @@ const config = {
             ["@babel/plugin-proposal-class-properties", { loose: false }],
             "@babel/plugin-proposal-json-strings"
           ],
-          presets: [["@babel/preset-env"], "@babel/preset-react"]
+          presets: [
+            ["@babel/preset-env", { modules: false }],
+            "@babel/preset-react"
+          ]
         }
       },
       {
@@ -35,7 +38,7 @@ const config = {
             "@babel/plugin-proposal-json-strings"
           ],
           presets: [
-            ["@babel/preset-env"],
+            ["@babel/preset-env", { modules: false }],
             "@babel/preset-react",
             "@babel/preset-typescript"
           ]
@@ -44,15 +47,9 @@ const config = {
       {
         test: /\.s?css$/i,
         use: [
-          {
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader"
-          },
-          {
-            loader: "sass-loader"
-          }
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+          { loader: "sass-loader" }
         ]
       },
       {
@@ -60,9 +57,16 @@ const config = {
         use: [
           {
             loader: "url-loader",
-            options: {
-              name: "img/[hash].[ext]"
-            }
+            options: { name: "img/[hash].[ext]" }
+          }
+        ]
+      },
+      {
+        test: /\.(ttf|woff2?|eof|eot)$/i,
+        use: [
+          {
+            loader: "file-loader",
+            options: { name: "font/[hash].[ext]" }
           }
         ]
       }
