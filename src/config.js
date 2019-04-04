@@ -2,14 +2,14 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 const spreadArray = (array1, array2) => {
-  const arrayOut = [];
+  let arrayOut = [];
   arrayOut = array1.reduce((prev, item) => item, arrayOut);
   arrayOut = array2.reduce((prev, item) => item, arrayOut);
   return arrayOut;
 };
 
 const spreadObject = (object1, object2) => {
-  const objectOut = {};
+  let objectOut = {};
   for (const key in object1) {
     if (object1.hasOwnProperty(key)) {
       const element = object1[key];
@@ -36,8 +36,8 @@ const configGenerator = options => {
     htmlWebpackPlugin: true
   };
   options = spreadObject(optionsBase, options);
-  const extensions = [".js", ".json"];
-  const presets = [["@babel/preset-env", { modules: false }]];
+  let extensions = [".js", ".json"];
+  let presets = [["@babel/preset-env", { modules: false }]];
   if (options.useReact) {
     extensions = spreadArray(extensions, [".jsx"]);
     presets = spreadArray(presets, ["@babel/preset-react"]);
@@ -48,7 +48,7 @@ const configGenerator = options => {
     ["@babel/plugin-proposal-class-properties", { loose: false }],
     "@babel/plugin-proposal-json-strings"
   ];
-  const rules = [
+  let rules = [
     {
       test: /\.jsx?$/i,
       exclude: /node_modules/,
@@ -102,7 +102,7 @@ const configGenerator = options => {
   if (options.useReact && options.useTypescript) {
     extensions = spreadArray(extensions, [".tsx"]);
   }
-  const plugins = [new CleanWebpackPlugin()];
+  let plugins = [new CleanWebpackPlugin()];
   if (!!options.htmlWebpackPlugin) {
     if (options.htmlWebpackPlugin === true) {
       plugins = spreadArray(plugins, [new HtmlWebpackPlugin()]);
