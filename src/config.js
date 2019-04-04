@@ -3,8 +3,14 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 const spreadArray = (array1, array2) => {
   let arrayOut = [];
-  arrayOut = array1.reduce((prev, item) => item, arrayOut);
-  arrayOut = array2.reduce((prev, item) => item, arrayOut);
+  arrayOut = array1.reduce((prev, item) => {
+    prev.push(item);
+    return prev;
+  }, arrayOut);
+  arrayOut = array2.reduce((prev, item) => {
+    prev.push(item);
+    return prev;
+  }, arrayOut);
   return arrayOut;
 };
 
