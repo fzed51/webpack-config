@@ -1,6 +1,6 @@
 {
   "name": "@fzed51/webpack-config",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "configuration de base pour webpack",
   "main": "./src/config.js",
   "scripts": {
