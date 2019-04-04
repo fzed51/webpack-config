@@ -1,6 +1,30 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
+const spreadArray = (array1, array2) => {
+  const arrayOut = [];
+  arrayOut = array1.reduce((prev, item) => item, arrayOut);
+  arrayOut = array2.reduce((prev, item) => item, arrayOut);
+  return arrayOut;
+};
+
+const spreadObject = (object1, object2) => {
+  const objectOut = {};
+  for (const key in object1) {
+    if (object1.hasOwnProperty(key)) {
+      const element = object1[key];
+      objectOut[key] = element;
+    }
+  }
+  for (const key in object2) {
+    if (object2.hasOwnProperty(key)) {
+      const element = object2[key];
+      objectOut[key] = element;
+    }
+  }
+  return objectOut;
+};
+
 /**
  * génère une config pour webpack
  * @param {{useReact?: boolean,useTypescript?: boolean,htmlWebpackPlugin?: boolean|{title?: string, template?: string}}} options
@@ -11,26 +35,27 @@ const configGenerator = options => {
     useTypescript: true,
     htmlWebpackPlugin: true
   };
-  options = { ...optionsBase, ...options };
+  options = spreadObject(optionsBase, options);
   const extensions = [".js", ".json"];
   const presets = [["@babel/preset-env", { modules: false }]];
   if (options.useReact) {
-    extensions = [...extensions, ".jsx"];
-    presets = [...presets, "@babel/preset-react"];
+    extensions = spreadArray(extensions, [".jsx"]);
+    presets = spreadArray(presets, ["@babel/preset-react"]);
   }
+  const babelPlugins = [
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-syntax-import-meta",
+    ["@babel/plugin-proposal-class-properties", { loose: false }],
+    "@babel/plugin-proposal-json-strings"
+  ];
   const rules = [
     {
       test: /\.jsx?$/i,
       exclude: /node_modules/,
       loader: "babel-loader",
       options: {
-        plugins: [
-          "@babel/plugin-syntax-dynamic-import",
-          "@babel/plugin-syntax-import-meta",
-          ["@babel/plugin-proposal-class-properties", { loose: false }],
-          "@babel/plugin-proposal-json-strings"
-        ],
-        presets
+        plugins: babelPlugins,
+        presets: presets
       }
     },
     {
@@ -61,34 +86,30 @@ const configGenerator = options => {
     }
   ];
   if (options.useTypescript) {
-    extensions = [...extensions, ".ts"];
-    rules = [
-      ...rules,
+    extensions = spreadArray(extensions, [".ts"]);
+    rules = spreadArray(rules, [
       {
         test: /\.tsx?$/i,
         exclude: /node_modules/,
         loader: "babel-loader",
         options: {
-          plugins: [
-            "@babel/plugin-syntax-dynamic-import",
-            "@babel/plugin-syntax-import-meta",
-            ["@babel/plugin-proposal-class-properties", { loose: false }],
-            "@babel/plugin-proposal-json-strings"
-          ],
-          presets: [...presets, "@babel/preset-typescript"]
+          plugins: babelPlugins,
+          presets: spreadArray(presets, ["@babel/preset-typescript"])
         }
       }
-    ];
+    ]);
   }
   if (options.useReact && options.useTypescript) {
-    extensions = [...extensions, ".tsx"];
+    extensions = spreadArray(extensions, [".tsx"]);
   }
   const plugins = [new CleanWebpackPlugin()];
   if (!!options.htmlWebpackPlugin) {
     if (options.htmlWebpackPlugin === true) {
-      plugins = [...plugins, new HtmlWebpackPlugin()];
+      plugins = spreadArray(plugins, [new HtmlWebpackPlugin()]);
     } else {
-      plugins = [...plugins, new HtmlWebpackPlugin(options.htmlWebpackPlugin)];
+      plugins = spreadArray(plugins, [
+        new HtmlWebpackPlugin(options.htmlWebpackPlugin)
+      ]);
     }
   }
 
@@ -97,7 +118,7 @@ const configGenerator = options => {
     target: "web",
     devtool: "source-map",
     module: { rules },
-    plugins,
+    plugins: plugins,
     optimization: {
       runtimeChunk: "single",
       splitChunks: {
