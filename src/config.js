@@ -109,4 +109,4 @@ const configGenerator = options => {
   };
 };
 
-module.exports = config;
+module.exports = configGenerator;
