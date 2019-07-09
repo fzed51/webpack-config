@@ -1,5 +1,9 @@
 # webpack-config
 
+![npm](https://img.shields.io/npm/v/@fzed51/webpack-config.svg?style=flat-square)
+![npm](https://img.shields.io/npm/dt/@fzed51/webpack-config.svg?style=flat-square)
+
+
 Ce package fourni les dépendances et un fichier de config de webpack pour un projet utilisant **js/react/typescript**
 
 ## Utilisation
