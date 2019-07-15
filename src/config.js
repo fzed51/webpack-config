@@ -33,13 +33,14 @@ const spreadObject = (object1, object2) => {
 
 /**
  * génère une config pour webpack
- * @param {{useReact?: boolean,useTypescript?: boolean,htmlWebpackPlugin?: boolean|{title?: string, template?: string}}} options
+ * @param {{useReact?: boolean,useTypescript?: boolean,htmlWebpackPlugin?: boolean|{title?: string, template?: string},cleanOutput?: boolean}} options
  */
 const configGenerator = options => {
   const optionsBase = {
     useReact: true,
     useTypescript: true,
-    htmlWebpackPlugin: true
+    htmlWebpackPlugin: true,
+    cleanOutput: true
   };
   options = spreadObject(optionsBase, options);
   let extensions = [".js", ".json"];
@@ -108,7 +109,10 @@ const configGenerator = options => {
   if (options.useReact && options.useTypescript) {
     extensions = spreadArray(extensions, [".tsx"]);
   }
-  let plugins = [new CleanWebpackPlugin()];
+  let plugins = []
+  if(options.cleanOutput){
+    plugins = spreadArray(plugins, [new CleanWebpackPlugin()]);
+  }
   if (!!options.htmlWebpackPlugin) {
     if (options.htmlWebpackPlugin === true) {
       plugins = spreadArray(plugins, [new HtmlWebpackPlugin()]);
