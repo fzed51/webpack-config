@@ -26,7 +26,7 @@ const updatePackage = () => {
     package.scripts = scripts;
 
     console.log(
-      `Ajout des script ${prefix}build et ${prefix} dev dans le fichier ${packagePath}`
+      `Ajout des script ${prefix}build et ${prefix}dev dans le fichier ${packagePath}`
     );
 
     let newData = JSON.stringify(package, null, 2);
@@ -67,7 +67,7 @@ input
     }
   ])
   .then(answers => {
-    console.log(answers);
+    // console.log(answers);
     if (answers.package) {
       updatePackage();
     }
