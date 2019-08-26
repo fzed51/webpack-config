@@ -33,7 +33,7 @@ const spreadObject = (object1, object2) => {
 
 /**
  * génère une config pour webpack
- * @param {{useReact?: boolean,useTypescript?: boolean,htmlWebpackPlugin?: boolean|{title?: string, template?: string},cleanOutput?: boolean}} options
+ * @param {{useReact?: boolean,useTypescript?: boolean,htmlWebpackPlugin?: boolean|{title?: string, template?: string},cleanOutput?: boolean|{exclude?: string[]}}} options
  */
 const configGenerator = options => {
   const optionsBase = {
@@ -109,9 +109,20 @@ const configGenerator = options => {
   if (options.useReact && options.useTypescript) {
     extensions = spreadArray(extensions, [".tsx"]);
   }
-  let plugins = []
-  if(options.cleanOutput){
-    plugins = spreadArray(plugins, [new CleanWebpackPlugin()]);
+  let plugins = [];
+  if (!!options.cleanOutput) {
+    const CleanWebpackPluginOptions = {};
+    if (!!options.cleanOutput.exclude) {
+      CleanWebpackPluginOptions["cleanOnceBeforeBuildPatterns"] = ["**/*"];
+      options.cleanOutput.exclude
+        .map(pattern => "!" + pattern)
+        .forEach(pattern => {
+          CleanWebpackPluginOptions.cleanOnceBeforeBuildPatterns.push(pattern);
+        });
+    }
+    plugins = spreadArray(plugins, [
+      new CleanWebpackPlugin(CleanWebpackPluginOptions)
+    ]);
   }
   if (!!options.htmlWebpackPlugin) {
     if (options.htmlWebpackPlugin === true) {

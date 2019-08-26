@@ -8,6 +8,16 @@ console.log(conf({
     cleanOutput: false
 }));
 
+console.log('cleanOutput: with exclude -------------------');
+console.log(conf({
+    cleanOutput: {
+        exclude: [
+            'static.*',
+            'to/static/*.*'
+        ]
+    }
+}));
+
 
 console.log('useReact: false -------------------');
 console.log(conf({
