@@ -4,8 +4,10 @@
   "description": "configuration de base pour webpack",
   "main": "./src/config.js",
   "scripts": {
-    "test": "node ./test/test.js",
-    "postinstall": "node ./bin/postinstall.js"
+    "test": "node ./test/test.js"
+  },
+  "bin": {
+    "webpack-config-init": "./bin/webpack-config-init.js"
   },
   "keywords": [
     "webpack",

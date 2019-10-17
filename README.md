@@ -14,8 +14,8 @@ Installer le package
 ```
 npm i -D @fzed51/webpack-config
 ```
-Lors de l'installation, un script vous demande si vous voulez modifier les fichiers 
-`webpack.config.js` et `package.json` automatiquement.
+
+Après l'installation, lancer le script `./node_modules/.bin/webpack-config-init`. Le script vous demande si vous voulez créer le fichier `webpack.config.js` et modifier le fichier `package.json` automatiquement.
 
 Créer le fichier `webpack.config.js` manuellement.
 
