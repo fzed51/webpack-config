@@ -35,12 +35,12 @@ const spreadObject = (object1, object2) => {
  * génère une config pour webpack
  * @param {{useReact?: boolean,useTypescript?: boolean,htmlWebpackPlugin?: boolean|{title?: string, template?: string},cleanOutput?: boolean|{exclude?: string[]}}} options
  */
-const configGenerator = options => {
+const configGenerator = (options) => {
   const optionsBase = {
     useReact: true,
     useTypescript: true,
     htmlWebpackPlugin: true,
-    cleanOutput: true
+    cleanOutput: true,
   };
   options = spreadObject(optionsBase, options);
   let extensions = [".js", ".json"];
@@ -53,7 +53,7 @@ const configGenerator = options => {
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-syntax-import-meta",
     ["@babel/plugin-proposal-class-properties", { loose: false }],
-    "@babel/plugin-proposal-json-strings"
+    "@babel/plugin-proposal-json-strings",
   ];
   let rules = [
     {
@@ -62,35 +62,40 @@ const configGenerator = options => {
       loader: "babel-loader",
       options: {
         plugins: babelPlugins,
-        presets: presets
-      }
+        presets: presets,
+      },
     },
     {
       test: /\.s?css$/i,
       use: [
         { loader: "style-loader" },
         { loader: "css-loader" },
-        { loader: "sass-loader" }
-      ]
+        {
+          loader: "sass-loader",
+          options: {
+            implementation: require.resolve("sass"),
+          },
+        },
+      ],
     },
     {
       test: /\.(jpe?g|png|gif|svg)$/i,
       use: [
         {
           loader: "url-loader",
-          options: { name: "img/[hash].[ext]" }
-        }
-      ]
+          options: { name: "img/[hash].[ext]" },
+        },
+      ],
     },
     {
       test: /\.(ttf|woff2?|eof|eot)$/i,
       use: [
         {
           loader: "file-loader",
-          options: { name: "font/[hash].[ext]" }
-        }
-      ]
-    }
+          options: { name: "font/[hash].[ext]" },
+        },
+      ],
+    },
   ];
   if (options.useTypescript) {
     extensions = spreadArray(extensions, [".ts"]);
@@ -101,9 +106,9 @@ const configGenerator = options => {
         loader: "babel-loader",
         options: {
           plugins: babelPlugins,
-          presets: spreadArray(presets, ["@babel/preset-typescript"])
-        }
-      }
+          presets: spreadArray(presets, ["@babel/preset-typescript"]),
+        },
+      },
     ]);
   }
   if (options.useReact && options.useTypescript) {
@@ -115,13 +120,13 @@ const configGenerator = options => {
     if (!!options.cleanOutput.exclude) {
       CleanWebpackPluginOptions["cleanOnceBeforeBuildPatterns"] = ["**/*"];
       options.cleanOutput.exclude
-        .map(pattern => "!" + pattern)
-        .forEach(pattern => {
+        .map((pattern) => "!" + pattern)
+        .forEach((pattern) => {
           CleanWebpackPluginOptions.cleanOnceBeforeBuildPatterns.push(pattern);
         });
     }
     plugins = spreadArray(plugins, [
-      new CleanWebpackPlugin(CleanWebpackPluginOptions)
+      new CleanWebpackPlugin(CleanWebpackPluginOptions),
     ]);
   }
   if (!!options.htmlWebpackPlugin) {
@@ -129,7 +134,7 @@ const configGenerator = options => {
       plugins = spreadArray(plugins, [new HtmlWebpackPlugin()]);
     } else {
       plugins = spreadArray(plugins, [
-        new HtmlWebpackPlugin(options.htmlWebpackPlugin)
+        new HtmlWebpackPlugin(options.htmlWebpackPlugin),
       ]);
     }
   }
@@ -145,9 +150,9 @@ const configGenerator = options => {
       splitChunks: {
         chunks: "all",
         minSize: 0,
-        maxSize: 100000
-      }
-    }
+        maxSize: 100000,
+      },
+    },
   };
 };
 
