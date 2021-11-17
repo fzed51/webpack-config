@@ -22,9 +22,9 @@ const updatePackage = () => {
       prefix = "wc:";
     }
 
-    scripts[prefix + "build"] = "webpack -p --mode production";
+    scripts[prefix + "build"] = "webpack --mode production";
     scripts[prefix + "dev"] =
-      "webpack-dev-server -d --mode development --hot --open";
+      "webpack-dev-server --mode development --hot --open";
     package.scripts = scripts;
 
     console.log(
@@ -60,15 +60,15 @@ input
     {
       type: "confirm",
       name: "package",
-      message: "Voulez-vous ajouter les scripts au package.json"
+      message: "Voulez-vous ajouter les scripts au package.json",
     },
     {
       type: "confirm",
       name: "webpack",
-      message: "Voulez-vous ajouter initialiser un fichier webpack.config.js"
-    }
+      message: "Voulez-vous ajouter initialiser un fichier webpack.config.js",
+    },
   ])
-  .then(answers => {
+  .then((answers) => {
     // console.log(answers);
     if (answers.package) {
       updatePackage();

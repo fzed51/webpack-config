@@ -86,6 +86,7 @@ const configGenerator = (options) => {
           options: { name: "img/[hash].[ext]" },
         },
       ],
+      type: "javascript/auto",
     },
     {
       test: /\.(ttf|woff2?|eof|eot)$/i,
@@ -95,6 +96,7 @@ const configGenerator = (options) => {
           options: { name: "font/[hash].[ext]" },
         },
       ],
+      type: "javascript/auto",
     },
   ];
   if (options.useTypescript) {
@@ -146,11 +148,17 @@ const configGenerator = (options) => {
     module: { rules },
     plugins: plugins,
     optimization: {
-      runtimeChunk: "single",
       splitChunks: {
         chunks: "all",
-        minSize: 0,
-        maxSize: 100000,
+        minSize: 25000,
+        maxSize: 250000,
+        cacheGroups: {
+          vendor: {
+            name: "node_vendors",
+            test: /[\\/]node_modules[\\/]/,
+            chunks: "all",
+          },
+        },
       },
     },
   };
