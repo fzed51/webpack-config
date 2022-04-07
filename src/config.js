@@ -44,7 +44,9 @@ const configGenerator = (options) => {
   };
   options = spreadObject(optionsBase, options);
   let extensions = [".js", ".json"];
-  let presets = [["@babel/preset-env", { modules: false }]];
+  let presets = [
+    ["@babel/preset-env", { modules: false, useBuiltIns: "usage", corejs: 3 }],
+  ];
   if (options.useReact) {
     extensions = spreadArray(extensions, [".jsx"]);
     presets = spreadArray(presets, ["@babel/preset-react"]);
