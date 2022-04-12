@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const spreadArray = (array1, array2) => {
   let arrayOut = [];
@@ -32,15 +31,19 @@ const spreadObject = (object1, object2) => {
 };
 
 /**
+ * Options pour htmlWebpackPlugin
+ * @typedef {{cache?:boolean, favicon?:false|string, showErrors?:boolean, publicPath?:string|"auto", minify?:"auto"|false, title?:string, meta?:false|{[name:string]:string|false|{[attributeName:string]:string|boolean}}, template?:string, xhtml?:boolean}} HtmlWebpackPluginOptions
+ */
+
+/**
  * génère une config pour webpack
- * @param {{useReact?: boolean,useTypescript?: boolean,htmlWebpackPlugin?: boolean|{title?: string, template?: string},cleanOutput?: boolean|{exclude?: string[]}}} options
+ * @param {{useReact?: boolean,useTypescript?: boolean,htmlWebpackPlugin?: boolean|HtmlWebpackPluginOptions}} options
  */
 const configGenerator = (options) => {
   const optionsBase = {
     useReact: true,
     useTypescript: true,
     htmlWebpackPlugin: true,
-    cleanOutput: true,
   };
   options = spreadObject(optionsBase, options);
   let extensions = [".js", ".json"];
@@ -117,20 +120,6 @@ const configGenerator = (options) => {
     extensions = spreadArray(extensions, [".tsx"]);
   }
   let plugins = [];
-  if (!!options.cleanOutput) {
-    const CleanWebpackPluginOptions = {};
-    if (!!options.cleanOutput.exclude) {
-      CleanWebpackPluginOptions["cleanOnceBeforeBuildPatterns"] = ["**/*"];
-      options.cleanOutput.exclude
-        .map((pattern) => "!" + pattern)
-        .forEach((pattern) => {
-          CleanWebpackPluginOptions.cleanOnceBeforeBuildPatterns.push(pattern);
-        });
-    }
-    plugins = spreadArray(plugins, [
-      new CleanWebpackPlugin(CleanWebpackPluginOptions),
-    ]);
-  }
   if (!!options.htmlWebpackPlugin) {
     if (options.htmlWebpackPlugin === true) {
       plugins = spreadArray(plugins, [new HtmlWebpackPlugin()]);

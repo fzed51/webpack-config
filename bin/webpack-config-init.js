@@ -50,8 +50,7 @@ const initWebpack = () => {
     module.exports = config({
       useReact: true,
       useTypescript: true,
-      htmlWebpackPlugin: true,
-      cleanOutput: true
+      htmlWebpackPlugin: true
     });
     `;
     fs.writeFileSync(webpackPath, webpackConfigContent);
