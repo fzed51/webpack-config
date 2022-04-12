@@ -22,8 +22,13 @@ const updatePackage = () => {
       prefix = "wc:";
     }
 
-    scripts[prefix + "build"] = "webpack --mode production";
-    scripts[prefix + "dev"] =
+    scripts["_" + prefix + "clean"] = "git clean -xq ./dist";
+    scripts["_" + prefix + "build"] = "webpack --mode production";
+    scripts[
+      prefix + "build"
+    ] = `npm run _${prefix}clean && npm run _${prefix}build`;
+    scripts[prefix + "dev"] = "webpack-dev-server --mode development --hot";
+    scripts[prefix + "dev:o"] =
       "webpack-dev-server --mode development --hot --open";
     package.scripts = scripts;
 
